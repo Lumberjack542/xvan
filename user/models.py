@@ -20,14 +20,14 @@ class Category(models.TextChoices):
     education = 'education'
     car = 'car'
     relaxation = 'relaxation'
-    Payments = 'Payments, commissions'
-    Shopping = 'Shopping: clothes, appliances'
+    payments = 'Payments, commissions'
+    shopping = 'Shopping: clothes, appliances'
     products = 'products'
     travel = 'travel'
 
 
 class Profile(models.Model):
-    #firs_name = models.CharField(max_length=120)
+
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
     cat = models.CharField(
         max_length=120,
@@ -40,7 +40,7 @@ class Profile(models.Model):
 
 
 class Transaction(models.Model):
-    user = models.OneToOneField(Profile, on_delete=models.CASCADE)
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     sum = models.FloatField()
     time = models.DateTimeField(auto_now_add=True)
     cat = models.CharField(
@@ -50,3 +50,5 @@ class Transaction(models.Model):
     organisation = models.CharField(max_length=150)
     description = models.TextField()
 
+    def __str__(self):
+        return f'{self.user}'

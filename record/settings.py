@@ -29,9 +29,6 @@ DEBUG = True
 
 AUTH_USER_MODEL = 'user.User'
 
-ALLOWED_HOSTS = []
-
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -144,10 +141,11 @@ REST_FRAMEWORK = {
     ),
 }
 
-ALLOWED_HOSTS = ['0.0.0.0']
+ALLOWED_HOSTS = ["*"]
 
 EMAIL_USE_TLS = True
-EMAIL_HOST = "smtp.gmail.com"
+EMAIL_USE_SSl = False
+EMAIL_HOST = "smtp.gmail.com" #or another
 EMAIL_HOST_USER = mail
 EMAIL_HOST_PASSWORD = password
 EMAIL_PORT = 587
