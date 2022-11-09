@@ -144,6 +144,8 @@ REST_FRAMEWORK = {
     ),
 }
 
+ALLOWED_HOSTS = ['0.0.0.0']
+
 EMAIL_USE_TLS = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_HOST_USER = mail
