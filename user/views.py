@@ -7,9 +7,8 @@ from rest_framework import generics, status
 from django.db import transaction
 
 
-class UserApiView(generics.RetrieveUpdateDestroyAPIView):
-
-    queryset = Profile.objects.select_related('transaction').all()
+class UserApiView(generics.ListAPIView):
+    queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
     permission_classes = (IsAuthenticated, )
 
@@ -20,8 +19,9 @@ class TransactionApiView(generics.ListCreateAPIView):
     permission_classes = (IsAuthenticated, )
 
 
-class UserProfileView(RetrieveAPIView):
+class UserProfileView(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = (IsAuthenticated,)
+    serializer_class = ProfileSerializer
 
     def get(self, request):
         try:
