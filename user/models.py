@@ -28,7 +28,7 @@ class Category(models.TextChoices):
 
 class Profile(models.Model):
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="profile")
     cat = models.CharField(
         max_length=120,
         choices=Category.choices,

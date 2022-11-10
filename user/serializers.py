@@ -8,16 +8,21 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class ProfileSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Profile
-        fields = '__all__'
-
-
 class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
 
 
-str = ''
+class ProfileSerializer(serializers.ModelSerializer):
+    transaction_set = TransactionSerializer(many=True)
+
+    class Meta:
+        model = Profile
+        fields = '__all__'
+
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
