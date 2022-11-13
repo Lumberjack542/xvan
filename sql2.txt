@@ -1,0 +1,2 @@
+select CEILING(diagonal), count(*) from notebooks_notebook
+group by CEILING
