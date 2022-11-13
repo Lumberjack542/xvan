@@ -1,0 +1,32 @@
+CREATE OR REPLACE FUNCTION public.substring_index (
+  str text,
+  delim text,
+  count integer = 1,
+  out substring_index text
+)
+RETURNS text AS
+$body$
+BEGIN
+  IF count > 0 THEN
+    substring_index = array_to_string((string_to_array(str, delim))[:count], delim);
+  ELSE
+    DECLARE
+      _array TEXT[];
+    BEGIN
+      _array = string_to_array(str, delim);
+      substring_index = array_to_string(_array[array_length(_array, 1) + count + 1:], delim);
+    END;
+  END IF;
+END;
+$body$
+LANGUAGE 'plpgsql'
+IMMUTABLE
+CALLED ON NULL INPUT
+SECURITY INVOKER
+COST 5;
+
+
+SELECT SUBSTRING_INDEX(title, ' ',1), count(*)
+FROM notebooks_notebook
+group by SUBSTRING_INDEX(title, ' ',1)
+order by count;
