@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.generics import RetrieveAPIView
@@ -36,9 +37,19 @@ class UserApiView(mixins.ListModelMixin,
 
 
 class TransactionApiView(ModelViewSet):
-    queryset = Transaction.objects.select_related('cat')
+    queryset = Transaction.objects.select_related('cat', 'user')
     serializer_class = TransactionSerializer
     permission_classes = (IsAuthenticated, )
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['sum', 'time']
+
+    def get_queryset(self):
+        return self.queryset.filter(user__id=self.request.user.id)
+
+
+
+
+
 
 
 
