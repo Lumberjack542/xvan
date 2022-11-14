@@ -23,11 +23,12 @@ class UserApiView(mixins.ListModelMixin,
 
         queryset = self.queryset
         if self.action == 'list':
-            queryset = Profile.objects.prefetch_related('transaction_set')
+            queryset = Profile.objects.prefetch_related('transaction_set', 'cat')
+
         return queryset
 
     def get_serializer_class(self):
-        if self.action == 'update':
+        if self.action in ['update','create']:
             self.serializer_class = ProfileUpdateSerializer
         else:
             self.serializer_class = ProfileSerializer
@@ -35,7 +36,7 @@ class UserApiView(mixins.ListModelMixin,
 
 
 class TransactionApiView(ModelViewSet):
-    queryset = Transaction.objects.all()
+    queryset = Transaction.objects.select_related('cat')
     serializer_class = TransactionSerializer
     permission_classes = (IsAuthenticated, )
 

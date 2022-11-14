@@ -2,6 +2,12 @@ from rest_framework import serializers
 from .models import *
 
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+
+
 class CustomUserDetailsSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -9,6 +15,7 @@ class CustomUserDetailsSerializer(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = Transaction
         fields = '__all__'
@@ -16,6 +23,7 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 class ProfileSerializer(serializers.ModelSerializer):
     transaction_set = TransactionSerializer(many=True)
+    cat = CategorySerializer(many=True)
 
     class Meta:
         model = Profile
@@ -25,4 +33,5 @@ class ProfileSerializer(serializers.ModelSerializer):
 class ProfileUpdateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Profile
-        fields = '__all__'
+        exclude = ['balance']
+
